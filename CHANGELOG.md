@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.1] - 2026-06-11
+
+### Changed
+
+- README.md: Rewrite with guizang-style structure (30秒开始/效果/适合不适合/品类检测/使用场景/主题色预设/字号阶梯/FAQ/核心设计原则/视觉参考)
+- README.md: Remove English section, use single Chinese README with inline English terms
+- README.md: Add flat-square badges (GitHub stars/License/Skill/WeChat/ClawHub/Claude Code)
+- GitHub repo description: Fix garbled characters
+
 ## [6.0.0] - 2026-06-10
 
 ### Breaking Changes — Architecture Overhaul
