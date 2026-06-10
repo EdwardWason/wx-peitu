@@ -72,6 +72,18 @@ SKILL.md Rule 7 中的 `≥9/15` 指 Multi 模式下的3维评分。
 
 If threshold not met, identify the weakest dimension and improve before outputting.
 
+## Canvas Coverage Hard Rule
+
+On 640px-wide canvases, content must cover ≥70% of canvas height. Any pure-whitespace band >20% of canvas height (>128px) needs a stated reason — hero-image breathing, single-sentence statement, or leading/trailing margins (combined ≤20%).
+
+On 900×383 covers, photo + title + subtitle must cover ≥60% of canvas.
+
+On 640×640 quote cards, the quote + attribution + at least one anchor (kicker/meta/hairline rule) must exist. A quote without anchors reads as "missing content", not "intentional whitespace".
+
+**Do NOT use `flex: 1` or `justify-content: center` to push content to the vertical center.** Social cards are scrolled one at a time; under-filled cards read as "PowerPoint with a missing element."
+
+Each recipe in `assets.md` carries a `Minimum density:` line. If your content doesn't reach that floor, **switch to a different recipe or shorten the canvas** — never just publish under-filled.
+
 ## Density Anti-Patterns (Red Lines)
 
 These patterns indicate density has crossed into clutter. **Any one = reject and fix**:
@@ -165,6 +177,11 @@ Inspired by Kami's anti-pattern system. These are quality gates, not suggestions
 | 36 | Serif synthetic bold (600/700) | Lock serif at 400/500 only |
 | 37 | Cool blue-gray tones | All grays must be warm-toned (yellow-brown undertone) |
 | 38 | Italic in print/PDF templates | Italic only allowed in screen-only contexts |
+| 38a | Flex centering on social card (using `flex:1` or `justify-content:center` to vertically center sparse content) | Fill the canvas with content, or switch to a smaller canvas/recipe |
+| 38b | Under-filled 640px card with <70% content coverage | Add pull quote, evidence image, marginal column, or ledger rows |
+| 38c | Cover title without photo background (纯色封面) | All covers must use photo background — hero pages must stop the scroll |
+| 38d | Mixed Editorial/Swiss recipes in same set | Pick one mode for all body illustrations; only covers may differ |
+| 38e | Same recipe 3+ times consecutively | Force layout diversity — switch recipe every 2 cards max |
 
 ### Category 8: AI Voice Decontamination (#39-48)
 
