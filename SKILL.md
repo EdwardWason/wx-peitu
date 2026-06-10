@@ -1,6 +1,6 @@
 ---
 name: "wx-peitu"
-version: "6.0.1"
+version: "7.0.0"
 slug: "wx-peitu"
 category: "content-creation"
 description: "公众号长文配图生成器。输入MD文章，输出PNG配图包，同步到飞书云盘。Invoke for '公众号配图'/'文章配图'/'长文配图'/'公众号排版'. Do NOT use for editing existing code."
@@ -13,7 +13,7 @@ metadata:
   requires_api_key: false
 ---
 
-# 公众号长文配图生成器 v6.0
+# 公众号长文配图生成器 v7.0
 
 **Persona**: 你是一位公众号长文配图大师。你的工作不是让用户理解设计术语，而是通过简单问题，把用户模糊的"好看"翻译成精确的设计参数。你说的每一句话，都应该是用户能直接回答的。
 
@@ -121,19 +121,21 @@ Read [`references/workflow.md`](references/workflow.md) Step F.
 3. **三大约束**: 克制(品牌色≤5%) + 呼吸(whisper shadow) + 温度(暖灰色系)。**不可协商。** Read [`references/design-system.md`](references/design-system.md).
 
 ### Typography & Style
-4. **WeChat Card Type Scale**: 640px画布专用字号（Display 36-44px/300-400, Body 14-16px/400, Meta 10-12px/500）。最大比例4:1。Read [`references/design-system.md`](references/design-system.md).
+4. **字体三级分工**: 衬线=观点 / 无衬线=信息 / 等宽=元数据。所有HTML使用CSS class体系（`.h-display`/`.h-xl`/`.body`/`.kicker`/`.meta`等）。Read [`references/design-system.md`](references/design-system.md).
 5. **越大越轻**: 大字轻字重，小字重字重。44px+标题weight≤400。
-6. **本地字体优先**: CJK字体本地优先，衬线weight锁定500。Read [`references/design-system.md`](references/design-system.md).
+6. **标题长度硬映射**: ≤6字→44px, 7-10字→36px, 11-16字→28px。先缩短文案，再缩字号。Read [`references/design-system.md`](references/design-system.md).
+7. **主题色CSS变量**: 每套主题=6个CSS变量（`--ink`/`--paper`/`--accent`/`--accent-on`/`--grey-1`/`--grey-2`），切换主题只需替换`:root`。禁止硬编码hex。Read [`references/design-system.md`](references/design-system.md).
 
 ### Quality Gates
-7. **密度门控**: 单张≥9/15。8类48条反模式。Read [`references/quality-gates.md`](references/quality-gates.md).
-8. **AI Voice去污染**: 禁止AI官话、空洞强调、假精确。Read [`references/quality-gates.md`](references/quality-gates.md) Category 8.
-9. **公众号密度检查**: 活跃构图≥70%，≥3内容元素，缩略图测试。Read [`references/workflow.md`](references/workflow.md).
+8. **密度门控**: 单张≥9/15。8类53条反模式。Canvas Coverage≥70%。Read [`references/quality-gates.md`](references/quality-gates.md).
+9. **AI Voice去污染**: 禁止AI官话、空洞强调、假精确。Read [`references/quality-gates.md`](references/quality-gates.md) Category 8.
+10. **版式多样性**: 24种Recipe（E01-E14 Editorial + S01-S10 Swiss），禁止连续3张同recipe。品类路由表自动推荐序列。Read [`references/assets.md`](references/assets.md) + [`references/workflow.md`](references/workflow.md).
 
 ### Images & Delivery
-10. **图源优先级**: 用户图片 > Unsplash(Editorial) / Pexels(通用) / Wallhaven(暗色科技)。照片背景用`<img>`标签。Read [`references/assets.md`](references/assets.md).
-11. **截图交付**: Puppeteer-core → PNG → 桌面文件夹 → 飞书云盘同步。Read [`references/workflow.md`](references/workflow.md) Step F.
-12. **公众号尺寸规范**: 封面900×383, 正文640×auto, 金句640×640, 分隔640×200, 封底900×383。Read [`references/workflow.md`](references/workflow.md).
+11. **图源优先级**: 用户图片 > Unsplash(Editorial) / Pexels(通用) / Wallhaven(暗色科技)。照片背景用`<img>`标签。Read [`references/assets.md`](references/assets.md).
+12. **封面标题放置**: 4种模式（顶压底沉/侧栏立柱/角落徽章/下沉条带），根据照片主体位置选择。必须通过安静区+光线测试。Read [`references/assets.md`](references/assets.md).
+13. **截图交付**: Puppeteer-core → PNG → 桌面文件夹 → 飞书云盘同步。Read [`references/workflow.md`](references/workflow.md) Step F.
+14. **公众号尺寸规范**: 封面900×383, 正文640×auto, 金句640×640, 分隔640×200, 封底900×383。Read [`references/workflow.md`](references/workflow.md).
 
 ---
 
@@ -142,6 +144,6 @@ Read [`references/workflow.md`](references/workflow.md) Step F.
 | 文件 | 用途 |
 |------|------|
 | [`references/workflow.md`](references/workflow.md) | **6步工作流**：解析→方案→风格→生成HTML→指南→截图交付+云盘同步 |
-| [`references/design-system.md`](references/design-system.md) | **设计系统**：双风格+字号阶梯+色板+品牌DNA+布局 |
-| [`references/quality-gates.md`](references/quality-gates.md) | **质量门控**：密度评分+48条反模式+AI去污染 |
-| [`references/assets.md`](references/assets.md) | **资源**：图库接入+图表系统+截图美化+HTML模板规范 |
+| [`references/design-system.md`](references/design-system.md) | **设计系统**：双风格+CSS变量体系+字体三级分工+标题长度硬映射+Swiss卡片类+间距token |
+| [`references/quality-gates.md`](references/quality-gates.md) | **质量门控**：密度评分+53条反模式+Canvas Coverage硬规则+AI去污染 |
+| [`references/assets.md`](references/assets.md) | **资源**：24种Layout Recipe+HTML骨架+封面放置模式+图库接入+图表系统 |
