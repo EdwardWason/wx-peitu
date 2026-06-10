@@ -1,6 +1,6 @@
 ---
 name: "wx-peitu"
-version: "6.0.0"
+version: "6.0.1"
 slug: "wx-peitu"
 category: "content-creation"
 description: "公众号长文配图生成器。输入MD文章，输出PNG配图包，同步到飞书云盘。Invoke for '公众号配图'/'文章配图'/'长文配图'/'公众号排版'. Do NOT use for editing existing code."
