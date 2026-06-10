@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.0.0] - 2026-06-11
+
+### Breaking Changes — Design System Overhaul
+
+This is a fundamental upgrade inspired by guizang-social-card-skill and guizang-ppt-skill.
+
+- **24 Layout Recipes replace 10 layout tags**: Editorial E01-E14 + Swiss S01-S10, each with HTML skeleton code, minimum density, and hard limits
+- **Font Three-Tier Division**: Serif=Opinion / Sans=Information / Mono=Metadata, with CSS class system (`.h-display`/`.h-xl`/`.body`/`.kicker`/`.meta` etc.)
+- **Theme CSS Variable System**: 9 themes (5 Editorial + 4 Swiss) defined as 6 CSS variables (`--ink`/`--paper`/`--accent`/`--accent-on`/`--grey-1`/`--grey-2`), switching = replacing `:root`
+- **Chinese Title Length Bands**: Hard mapping table (≤6 chars→44px, 7-10→36px, 11-16→28px), replacing old Adaptive Title Sizing pseudocode
+- **Category Routing Table**: 11 categories with recipe sequences, text-image schemes, image source priority, and common pitfalls — replacing old detection-only table
+
+### Added
+
+- Cover Title Placement Modes: 4 modes (顶压底沉/侧栏立柱/角落徽章/下沉条带) with photo qualification gate
+- Swiss Card Class System: 4 mutually exclusive types (`.card-ink`/`.card-accent`/`.card-fill`/`.card-outlined`)
+- Standard Image Ratio Classes: `.r-3x4`/`.r-1x1`/`.r-4x3`/`.r-3x2`/`.r-16x9`/`.r-21x9`
+- Spacing Token System: `--sp-3` to `--sp-12`, no arbitrary px margins
+- Canvas Coverage Hard Rule: ≥70% on 640px, ≥60% on 900×383 covers
+- 5 new anti-patterns (38a-38e): flex centering, under-filled cards, solid-color covers, mixed modes, consecutive same recipe
+
+### Removed
+
+- Old WeChat Card Type Scale table — replaced by Font Three-Tier Division
+- Old Adaptive Title Sizing pseudocode — replaced by Chinese Title Length Bands
+- Old Font Pairing System (6 Presets) — replaced by Font Stacks
+- Old HTML Template Specification (4.1-4.5) — replaced by Layout Recipe system
+
 ## [6.0.1] - 2026-06-11
 
 ### Changed
