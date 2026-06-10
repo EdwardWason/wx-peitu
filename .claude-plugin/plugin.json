@@ -1,0 +1,15 @@
+{
+  "name": "wx-peitu",
+  "description": "公众号长文配图生成器。输入MD文章，输出PNG配图包，同步飞书云盘。双风格+20种配图+Puppeteer截图交付。",
+  "version": "6.0.0",
+  "slug": "wx-peitu",
+  "author": {
+    "name": "TRAE SOLO"
+  },
+  "homepage": "https://github.com/EdwardWason/wx-peitu",
+  "repository": "https://github.com/EdwardWason/wx-peitu",
+  "license": "MIT-0",
+  "keywords": ["wechat", "illustration", "infographic", "knowledge-card", "content-creation", "puppeteer", "png-delivery", "lark-drive"],
+  "triggers": ["公众号配图", "文章配图", "长文配图", "公众号排版"],
+  "skills": ["./"]
+}
