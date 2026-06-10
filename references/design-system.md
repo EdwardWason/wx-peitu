@@ -1,6 +1,6 @@
-# Design System v6 (Dual Style)
+# Design System v7 (Dual Style + Theme Variables)
 
-2 visual modes + constraints + typography + color + brand DNA. Consolidated from 4 reference files.
+2 visual modes × 9 themes × CSS variable system + font three-tier division + spacing tokens + card classes + image ratios. Consolidated from 4 reference files.
 
 ---
 
@@ -20,7 +20,7 @@
 - Card spacing ≥ 2× content spacing (gap between cards > gap within cards)
 - Section title margin-bottom ≥ 2× margin-above
 - Whisper shadow only: `0 4pt 24pt rgba(0,0,0,0.05)`, never hard drop shadows
-- Ring shadow for emphasis: `0 0 0 1pt var(--brand)`, not box-shadow with offset > 4px
+- Ring shadow for emphasis: `0 0 0 1pt var(--accent)`, not box-shadow with offset > 4px
 - Border width: 0.5pt, border-radius: 8pt minimum for cards
 
 ### Constraint 3: 温度 (Warmth)
@@ -37,8 +37,8 @@
   --parchment:  #f5f4ed;   /* warm cream background */
   --ivory:      #faf9f5;   /* card background */
   ```
-- **Never** `#FFFFFF` as page background. Use `--parchment` or `--ivory`.
-- **Never** `#000000` as text color. Use `--near-black`.
+- **Never** `#FFFFFF` as page background. Use `--paper` (theme variable) or `--parchment`.
+- **Never** `#000000` as text color. Use `--ink` (theme variable) or `--near-black`.
 
 ### Serif Weight Lock
 
@@ -66,42 +66,19 @@ Two visual stances — any topic can be rendered in either mode. Pick by editori
 
 ### Mode A: Editorial Magazine (杂志社论风)
 
-**Visual anchors**: Serif/Songti display title + quiet sans body · Warm paper background (#f5f4ed) · Atmosphere layer (grain/wash/gradient) · Magazine structure (columns, pull-quotes, marginalia) · Large purposeful whitespace · Fine rules (0.5pt)
+**Visual anchors**: Serif/Songti display title + quiet sans body · Warm paper background · Atmosphere layer (grain/wash/gradient) · Magazine structure (columns, pull-quotes, marginalia) · Large purposeful whitespace · Fine rules (0.5pt)
 
 **Good fits**: humanistic, cultural, narrative, reflective — also workplace essays, AI think-pieces, product retrospectives
 
-**Palettes**: warm, elegant, earth, kami-parchment, morandi-journal, or any Brand DNA palette
-**Font presets**: 古典书卷, 瘦金风骨, 纸墨书卷(Kami), 官方权威
+**Themes**: 墨水经典, 森林墨, 牛皮纸, 沙丘, 莫兰迪, or any Brand DNA palette
 
 ### Mode B: Swiss International (瑞士国际主义风)
 
-**Visual anchors**: Full sans-serif (Inter / Noto Sans SC), no serif · Light paper (#fafaf8) + near-black (#0a0a0a) · Grid/dot matrix background · One high-saturation accent only · Strict left-aligned grid, hairline rules · Card-fill matrices, KPI towers, h-bar charts
+**Visual anchors**: Full sans-serif (Inter / Noto Sans SC), no serif · Light paper + near-black · Grid/dot matrix background · One high-saturation accent only · Strict left-aligned grid, hairline rules · Card-fill matrices, KPI towers, h-bar charts
 
 **Good fits**: tech products, data reports, engineering, design, annual summaries
 
-**Palettes**: Swiss-specific (see below)
-**Font presets**: 现代简约 only (Inter + Noto Sans SC)
-
-### Swiss Accent Palettes (4 options, pick one)
-
-| Accent | Hex | accent-on | Vibe | Best For |
-|--------|-----|-----------|------|----------|
-| **IKB Blue** (克莱因蓝) | #002FA7 | #ffffff | Academic, rational | AI/tech/design, default |
-| **Lemon Yellow** (柠檬黄) | #FFD500 | #0a0a0a | Active, vibrant | Youth, retail, consumer |
-| **Lemon Green** (柠檬绿) | #C5E803 | #0a0a0a | Future, emerging | Eco, Gen-Z, new tech |
-| **Safety Orange** (安全橙) | #FF6B35 | #ffffff | Industrial, urgent | Industrial, automotive |
-
-**Swiss hard rules**: One accent only per set · No gradients · No serif fonts · No rounded corners on accent blocks · Headings sit top-left
-
-### Swiss Gray Scale
-
-```css
---swiss-paper: #fafaf8;    /* warm white */
---swiss-grey-1: #f0f0ee;   /* light grey block bg */
---swiss-grey-2: #d4d4d2;   /* mid grey, dividers */
---swiss-grey-3: #737373;   /* dark grey, secondary text */
---swiss-ink: #0a0a0a;      /* near-black */
-```
+**Themes**: 克莱因蓝, 柠檬黄, 柠檬绿, 安全橙
 
 ### Style Identity Test
 
@@ -118,43 +95,254 @@ Two visual stances — any topic can be rendered in either mode. Pick by editori
 
 ### Aesthetic Guardrails
 
-- **Palette Lock**: Swiss → only 4 Swiss Accent Palettes; Editorial → only warm/elegant/earth/kami/morandi
+- **Palette Lock**: Swiss → only 4 Swiss themes; Editorial → only 5 Editorial themes
 - **Single Accent (Swiss)**: One chromatic accent per design set. No mixing
-- **No Cross-Mode Mixing**: Swiss gray scale ≠ Editorial warm grays
+- **No Cross-Mode Mixing**: Swiss theme variables ≠ Editorial theme variables
 - **Custom color**: Allow only with explicit brand hex + brand context → register as `--brand-accent`
 
 ---
 
-## Typography Rules
+## Theme CSS Variable System (主题变量系统)
 
-### WeChat Card Type Scale (640px canvas) ⭐ PRIMARY
+每个主题由 6 个 CSS 变量定义。切换主题 = 替换 `:root`。所有 HTML 模板必须引用 `var(--xxx)` 获取颜色。
 
-| Role | Size (640px) | Weight | Tracking | Rationale |
-|------|-------------|--------|----------|-----------|
-| Display/Hero | 36-44px | 300-400 | +0.03em | Confident, not overwhelming |
-| Section title | 24-32px | 400-500 | +0.02em | Clear hierarchy anchor |
-| Body | 14-16px | 400-500 | normal | Comfortable mobile reading |
-| Captions/meta | 10-12px | 500-600 | +0.1-0.15em | Legible at small size |
-| Data numbers | 28-36px | 300-400 | normal | Metric cards — larger than body, smaller than titles |
+### 变量定义
 
-**Hard rules**: 44px+ at weight 600+ = instant downgrade · Chinese display: weight 500 max (serif) or 300-400 (sans) · WeChat covers (900×383): Display up to 48px · 1:1 square (640×640): Display max 36px
+```css
+:root {
+  --ink: #141413;        /* primary text — 主文字色 */
+  --paper: #f5f4ed;      /* primary background — 主背景色 */
+  --accent: #002FA7;     /* chromatic accent — 强调色 */
+  --accent-on: #ffffff;  /* text on accent — 强调色上的文字 */
+  --grey-1: #f0f0ee;     /* light block background — 浅色块背景 */
+  --grey-2: #d4d4d2;     /* mid grey dividers — 中灰分隔线 */
+}
+```
 
-### Cover Type Scale (900×383 canvas) ⭐ 封面/封底专用
+### Editorial 主题 (5 个)
 
-封面和封底是 900×383 画布，比正文 640px 宽 40%，字号需要更大才能在手机缩略图中可读。
+#### 1. 墨水经典 Ink Classic
 
-| Role | Size (900px) | Weight | Tracking | Rationale |
-|------|-------------|--------|----------|-----------|
-| Cover Title | 44-52px | 300-400 | +0.03em | 手机缩略图必须1秒可读 |
-| Cover Subtitle | 15-18px | 400 | normal | 辅助信息，不抢标题 |
-| Cover Meta | 11-13px | 500 | +0.1em | 来源/作者/日期 |
-| Cover Eyebrow | 12-13px | 500 | +0.15em | 分类标签 |
+```css
+:root {
+  --ink: #141413;
+  --paper: #f5f4ed;
+  --accent: #1B365D;
+  --accent-on: #ffffff;
+  --grey-1: #e8e6dc;
+  --grey-2: #d4d2c8;
+}
+```
 
-**Hard rules**: 封面标题最小 44px · 封底标题最小 28px · 封面/封底必须照片背景
+**气质**: 克制、经典、纸墨感。默认 Editorial 主题。
+
+#### 2. 森林墨 Forest Ink
+
+```css
+:root {
+  --ink: #1a2e1f;
+  --paper: #f5f1e8;
+  --accent: #2D5A3A;
+  --accent-on: #ffffff;
+  --grey-1: #e5e0d4;
+  --grey-2: #c8c0b0;
+}
+```
+
+**气质**: 自然、沉稳、林间书卷。
+
+#### 3. 牛皮纸 Kraft Paper
+
+```css
+:root {
+  --ink: #2a1e13;
+  --paper: #eedfc7;
+  --accent: #8B6F47;
+  --accent-on: #ffffff;
+  --grey-1: #e0d4bc;
+  --grey-2: #c4b898;
+}
+```
+
+**气质**: 手工、质朴、旧书质感。
+
+#### 4. 沙丘 Dune
+
+```css
+:root {
+  --ink: #1f1a14;
+  --paper: #f0e6d2;
+  --accent: #C17F59;
+  --accent-on: #ffffff;
+  --grey-1: #e4dac6;
+  --grey-2: #c8bca4;
+}
+```
+
+**气质**: 沙漠、温暖、旅行文学。
+
+#### 5. 莫兰迪 Morandi
+
+```css
+:root {
+  --ink: #3D3529;
+  --paper: #F5F0E8;
+  --accent: #8B7E74;
+  --accent-on: #ffffff;
+  --grey-1: #e8e2d8;
+  --grey-2: #ccc4b8;
+}
+```
+
+**气质**: 低饱和、高级灰、艺术评论。
+
+### Swiss 主题 (4 个)
+
+#### 1. 克莱因蓝 IKB
+
+```css
+:root {
+  --ink: #0a0a0a;
+  --paper: #fafaf8;
+  --accent: #002FA7;
+  --accent-on: #ffffff;
+  --grey-1: #f0f0ee;
+  --grey-2: #d4d4d2;
+}
+```
+
+**气质**: 学术、理性、AI/科技/设计。Swiss 默认主题。
+
+#### 2. 柠檬黄 Lemon
+
+```css
+:root {
+  --ink: #0a0a0a;
+  --paper: #fafaf8;
+  --accent: #FFD500;
+  --accent-on: #0a0a0a;
+  --grey-1: #f0f0ee;
+  --grey-2: #d4d4d2;
+}
+```
+
+**气质**: 活力、年轻、消费/零售。
+
+#### 3. 柠檬绿 Lemon Green
+
+```css
+:root {
+  --ink: #0a0a0a;
+  --paper: #fafaf8;
+  --accent: #C5E803;
+  --accent-on: #0a0a0a;
+  --grey-1: #f0f0ee;
+  --grey-2: #d4d4d2;
+}
+```
+
+**气质**: 未来、新兴、环保/Gen-Z。
+
+#### 4. 安全橙 Safety Orange
+
+```css
+:root {
+  --ink: #0a0a0a;
+  --paper: #fafaf8;
+  --accent: #FF6B35;
+  --accent-on: #ffffff;
+  --grey-1: #f0f0ee;
+  --grey-2: #d4d4d2;
+}
+```
+
+**气质**: 工业、紧迫、汽车/制造。
+
+### Swiss 附加灰阶变量
+
+Swiss 主题额外使用一个三级灰（secondary text），不在 6 变量体系内但模板可能引用：
+
+```css
+--grey-3: #737373;   /* dark grey, secondary text */
+```
+
+### 硬规则 (Hard Rules)
+
+```
+🚫 所有 HTML 模板必须使用 var(--ink)、var(--paper) 等变量引用颜色
+🚫 禁止在模板中硬编码主题色的 hex 值
+✅ 唯一例外：非主题色（如照片遮罩 rgba）可以硬编码
+🚫 禁止跨模式混用主题（Swiss 模板不能套 Editorial 主题变量）
+```
+
+---
+
+## Font Three-Tier Division (字体三级分工)
+
+核心洞察来自归藏：**衬线 = 观点，无衬线 = 信息，等宽 = 元数据**。读者无需思考——眼睛自动识别角色。
+
+### Editorial 字体类 (640px 画布)
+
+| 角色 | Class | 字号 | 字重 | 字距 | 字体族 | 语义 |
+|------|-------|------|------|------|--------|------|
+| 展示标题 | `.h-display` | 40-44px | 500 | +0.04em | serif-zh | 观点/核心论断 |
+| 章节标题 | `.h-xl` | 28-32px | 500 | +0.03em | serif-zh | 观点/章节主张 |
+| 中标题 | `.h-md` | 20-24px | 500 | +0.02em | serif-zh | 观点/小节标题 |
+| 副标题 | `.h-sub` | 16-18px | 400 italic | normal | serif-en | 观点/辅助主张 |
+| 引用 | `.pullquote` | 28-32px | 500 italic | normal | serif-zh | 观点/引用 |
+| 导语 | `.lead` | 16-18px | 400 | normal | serif-zh | 信息/导语 |
+| 正文 | `.body` | 14-16px | 400 | normal | serif-zh | 信息/正文 |
+| 分类标签 | `.kicker` | 11-12px | 500 | +0.22em | mono | 元数据/分类标签 |
+| 来源日期 | `.meta` | 10-11px | 500 | +0.20em | mono | 元数据/来源日期 |
+| 标注 | `.label` | 10-11px | 500 | +0.20em | mono | 元数据/标注 |
+
+### Swiss 字体类 (640px 画布)
+
+| 角色 | Class | 字号 | 字重 | 字体族 | 语义 |
+|------|-------|------|------|--------|------|
+| 英雄标题 | `.h-hero` | 48-56px | 200-300 | sans | 信息/核心数据 |
+| 声明 | `.h-statement` | 36-44px | 200-300 | sans | 信息/声明 |
+| 章节标题 | `.h-xl` | 24-28px | 300-400 | sans | 信息/章节 |
+| 中标题 | `.h-md` | 18-20px | 400 | sans | 信息/小节 |
+| 超大数字 | `.num-mega` | 40-48px | 200-300 | sans | 信息/大数字 |
+| 大数字 | `.num-xl` | 32-36px | 200-300 | sans | 信息/数据 |
+| 导语 | `.lead` | 16-18px | 400 | sans-zh | 信息/导语 |
+| 正文 | `.body` | 14-16px | 400 | sans-zh | 信息/正文 |
+| 分类 | `.t-cat` | 12-13px | 600 | sans | 元数据/分类 |
+| 来源 | `.t-meta` | 10-11px | 500 | mono | 元数据/来源 |
+
+### Font Stacks (字体栈)
+
+**Editorial:**
+
+| 变量 | 字体栈 | 用途 |
+|------|--------|------|
+| `--serif-zh` | Noto Serif SC, Songti SC, STSong | 展示标题 |
+| `--serif-en` | Playfair Display | 英文副标题、引用（italic） |
+| `--sans-zh` | Noto Sans SC, PingFang SC | 工具文字、回退 |
+| `--sans-en` | Inter | 混排中的拉丁正文 |
+| `--mono` | IBM Plex Mono, JetBrains Mono | 标签、元数据、kicker |
+
+**Swiss:**
+
+| 变量 | 字体栈 | 用途 |
+|------|--------|------|
+| `--sans` | Inter, Helvetica Neue, Helvetica | 所有标题和英文 |
+| `--sans-zh` | Noto Sans SC, PingFang SC | 中文正文 |
+| `--mono` | IBM Plex Mono, JetBrains Mono | 标签、标注、t-meta |
+
+### 字体硬规则
+
+```
+🚫 Swiss 模板禁止加载任何衬线字体
+🚫 Editorial 模板禁止丢失衬线展示字体族
+🚫 Editorial 正文和导语默认使用 serif-zh（不是 sans）
+🚫 字号越大，字重越轻。44px+ 使用 600+ 字重 = 立即降级
+```
 
 ### The Larger The Lighter
 
-Large text → lighter weight; small text → heavier weight. This is the single most impactful rule for "premium" feel. A 44px+ title at weight 600+ reads as "generic landing page", not "magazine".
+大字 → 轻字重；小字 → 重字重。这是"高级感"最有效的单条规则。44px+ 标题用 600+ 字重读起来是"普通落地页"，不是"杂志"。
 
 ### CJK Letter-Spacing
 
@@ -163,16 +351,18 @@ Large text → lighter weight; small text → heavier weight. This is the single
 - English body: `letter-spacing: 0`
 - Small labels (< 10pt): `+0.2 to +0.5pt`
 
-### Font Pairing System (6 Presets)
+### Cover Type Scale (900×383 画布) — 使用字体类
 
-| Preset | Display (标题) | Body (正文) | Mono | Vibe | Mode |
-|--------|---------------|------------|------|------|------|
-| **古典书卷** | 汇文明朝体 | 楷体-GB2312 | Ubuntu Mono | 文化感、书卷气 | Editorial |
-| **瘦金风骨** | 宋徽宗瘦金体 | 汇文明朝体 | Ubuntu Mono | 极致个性、锋利 | Editorial |
-| **官方权威** | 方正小标宋 | Noto Sans SC | Ubuntu Mono | 正式、商务 | Editorial |
-| **现代简约** | Source Han Serif SC Heavy | Noto Sans SC | Ubuntu Mono | 干净、现代 | Swiss |
-| **手写教育** | 楷体-GB2312 | Noto Sans SC | Ubuntu Mono | 温和、亲切 | Editorial |
-| **纸墨书卷(Kami)** | TsangerJinKai02 | Noto Sans SC | JetBrains Mono | 克制、雅致 | Editorial |
+封面和封底是 900×383 画布，比正文 640px 宽 40%，字号需要更大才能在手机缩略图中可读。
+
+| 角色 | Class | 字号 | 字重 | 字距 | 字体族 |
+|------|-------|------|------|------|--------|
+| 封面标题 | `.h-display` | 44-52px | 300-400 | +0.03em | serif-zh / sans |
+| 封面副标题 | `.h-sub` | 15-18px | 400 | normal | serif-en / sans |
+| 封面元数据 | `.meta` | 11-13px | 500 | +0.15em | mono |
+| 封面眉标 | `.kicker` | 12-13px | 500 | +0.20em | mono |
+
+**硬规则**: 封面标题最小 44px · 封底标题最小 28px · 封面/封底必须照片背景
 
 ### Local Font Registry
 
@@ -184,71 +374,157 @@ Large text → lighter weight; small text → heavier weight. This is the single
 | 楷体 | `'楷体-GB2312'` | Kai — handwritten, warm |
 | 仿宋 | `'仿宋－GB2312'` | Fang — classical, formal |
 | 不坑盒子 | `'不坑盒子'` | Creative — playful |
+| Noto Serif SC | `'Noto Serif SC'` | Serif — clean, universal |
 | Noto Sans SC | `'Noto Sans SC'` | Sans — clean, universal |
 | Source Han Serif SC Heavy | `'Source Han Serif SC Heavy'` | Serif — elegant, powerful |
 | TsangerJinKai02 | `'TsangerJinKai02'` | Kai/Serif — restrained, Kami default |
-
-### Adaptive Title Sizing
-
-```
-getTitleStyle(titleLength):
-  if len ≤ 6:  { size: 44px, weight: 300, tracking: +0.04em }
-  if len ≤ 12: { size: 36px, weight: 400, tracking: +0.03em }
-  if len ≤ 20: { size: 28px, weight: 400, tracking: +0.02em }
-  if len ≤ 30: { size: 24px, weight: 500, tracking: +0.02em }
-  else:        { size: 20px, weight: 500, tracking: +0.01em }
-```
-
-CJK titles: use 1.1× the English size. CJK body: minimum 14px. CJK line-height: 1.7-1.8.
+| Inter | `'Inter'` | Sans — Swiss default, modern |
+| Playfair Display | `'Playfair Display'` | Serif-en — italic subtitles, pull quotes |
+| IBM Plex Mono | `'IBM Plex Mono'` | Mono — labels, metadata |
+| JetBrains Mono | `'JetBrains Mono'` | Mono — labels, metadata |
 
 ---
 
-## Color Rules
+## Chinese Title Length Bands (标题长度→字号硬映射)
 
-### Editorial Palettes
+中文字符视觉密度远高于拉丁字母。先选长度区间，再定字号。**先缩短文案，绝不缩小到低于正文字号。**
 
-| Palette | bg-primary | text-primary | Accents |
-|---------|-----------|-------------|---------|
-| **warm** | #FAF8F5 | #2D2418 | #E8913A, #D4583A, #5B8C5A, #3D7EA6 |
-| **elegant** | #F8F7F4 | #1A1A2E | #2D4A7A, #C9A84C, #6B5B8D, #3A6B5E |
-| **earth** | #F5F0E8 | #3D3529 | #8B6F47, #5B7B5E, #C17F59, #6B8FA3 |
-| **kami-parchment** | #F5F4ED | #141413 | #1B365D (ink-blue, sole accent) |
-| **morandi-journal** | #F5F0E8 | #3D3529 | #8B7E74, #A89F91, #6B8FA3, #B5A89A |
+### 640px 画布
 
-### Swiss Palettes (4 accent options)
+| 标题形态 | Editorial `.h-display` | Swiss `.h-hero` |
+|---------|----------------------|-----------------|
+| 1 行，≤6 字 | 44px（默认） | 56px（默认） |
+| 1 行，7-10 字 | 36px | 44px |
+| 2 行，每行 ≤8 字 | 32px | 36px |
+| 2 行，任一行 9-12 字 | 28px | 32px |
+| 3 行（罕见） | 24px | 28px |
 
-See Phase 0.5 Swiss Accent Palettes. Background: `--swiss-paper: #fafaf8`, Text: `--swiss-ink: #0a0a0a`.
+### 900×383 封面画布
 
-### Kami Full Token System (Editorial mode, kami variant)
+| 标题形态 | Editorial 封面标题 | Swiss 封面标题 |
+|---------|------------------|---------------|
+| 1 行，≤6 字 | 52px | 56px |
+| 1 行，7-10 字 | 44px | 48px |
+| 2 行，每行 ≤8 字 | 40px | 44px |
+| 2 行，任一行 9-12 字 | 36px | 40px |
+| 3 行 | 32px | 36px |
+
+### 硬规则
+
+```
+🚫 如果标题仍然放不下，缩短文案，不要缩小字号
+🚫 正文最小可读字号：640px 画布 14px，900px 画布 15px
+🚫 禁止为迁就长标题而缩小正文字号
+```
+
+---
+
+## Swiss Card Class System (Swiss 卡片类系统)
+
+Swiss 模式提供 4 种互斥卡片类。**同一节点上禁止组合使用。**
+
+| Class | 填充 | 文字色 | 用途 |
+|-------|------|--------|------|
+| `.card-ink` | 实色 `var(--ink)` | `var(--paper)` | 每组一张声明卡 |
+| `.card-accent` | `var(--accent)` | `var(--accent-on)` | 每张海报最多一张强调卡 |
+| `.card-fill` | `var(--grey-1)` | `var(--ink)` | 矩阵/速查/要点网格的主力卡 |
+| `.card-outlined` | 透明 + 1px `var(--grey-2)` 边框 | `var(--ink)` | 轻量级，无视觉重量 |
+
+### 卡片规则
+
+```
+✅ 多卡网格中每个格子必须使用相同的卡片类
+✅ 例外：允许一张 .card-accent 高亮卡突出一个项目
+🚫 同一网格中混用 .card-fill 和 .card-outlined = 糟糕的模板
+🚫 Editorial 模板不提供卡片类。Editorial 通过字体、标线、
+   账本行和分栏结构表达层级——不是卡片背景
+```
+
+---
+
+## Standard Image Ratio Classes (标准图片比例类)
+
+| Class | 比例 | 用途 |
+|-------|------|------|
+| `.r-3x4` | 3:4 | 竖版封面、田野笔记照片 |
+| `.r-1x1` | 1:1 | 方形人像、产品物件 |
+| `.r-4x3` | 4:3 | 经典社论照片 |
+| `.r-3x2` | 3:2 | 杂志内文配图 |
+| `.r-16x9` | 16:9 | 风景照片、信息图 |
+| `.r-21x9` | 21:9 | 微信 21:9 英雄图 |
+
+### 硬规则
+
+```
+🚫 必须使用标准比例类，禁止写临时 aspect-ratio: 2592/1798
+```
+
+---
+
+## Spacing Token System (间距令牌系统)
+
+| Token | 值 | 用途 |
+|-------|----|------|
+| `--sp-3` | 8px | 紧凑芯片间距、行内元数据 |
+| `--sp-4` | 12px | 卡片内间距、密集列表行 |
+| `--sp-5` | 16px | 正文块底部间距 |
+| `--sp-6` | 24px | 卡片内边距（紧凑）、网格间距（紧密） |
+| `--sp-7` | 32px | 默认网格间距 |
+| `--sp-8` | 40px | 卡片内边距（默认）、章节间距 |
+| `--sp-9` | 48px | 章节间距（默认） |
+| `--sp-10` | 64px | 内容块之间的主要分隔 |
+| `--sp-12` | 96px | 海报外边距 |
+
+### 硬规则
+
+```
+🚫 只使用此间距刻度中的值，禁止任意 px 间距
+```
+
+---
+
+## Color Rules (色彩规则)
+
+### Editorial 主题色映射
+
+| 主题 | --paper | --ink | --accent | --accent-on | --grey-1 | --grey-2 |
+|------|---------|-------|----------|-------------|----------|----------|
+| 墨水经典 | #f5f4ed | #141413 | #1B365D | #ffffff | #e8e6dc | #d4d2c8 |
+| 森林墨 | #f5f1e8 | #1a2e1f | #2D5A3A | #ffffff | #e5e0d4 | #c8c0b0 |
+| 牛皮纸 | #eedfc7 | #2a1e13 | #8B6F47 | #ffffff | #e0d4bc | #c4b898 |
+| 沙丘 | #f0e6d2 | #1f1a14 | #C17F59 | #ffffff | #e4dac6 | #c8bca4 |
+| 莫兰迪 | #F5F0E8 | #3D3529 | #8B7E74 | #ffffff | #e8e2d8 | #ccc4b8 |
+
+### Swiss 主题色映射
+
+| 主题 | --paper | --ink | --accent | --accent-on | --grey-1 | --grey-2 |
+|------|---------|-------|----------|-------------|----------|----------|
+| 克莱因蓝 | #fafaf8 | #0a0a0a | #002FA7 | #ffffff | #f0f0ee | #d4d4d2 |
+| 柠檬黄 | #fafaf8 | #0a0a0a | #FFD500 | #0a0a0a | #f0f0ee | #d4d4d2 |
+| 柠檬绿 | #fafaf8 | #0a0a0a | #C5E803 | #0a0a0a | #f0f0ee | #d4d4d2 |
+| 安全橙 | #fafaf8 | #0a0a0a | #FF6B35 | #ffffff | #f0f0ee | #d4d4d2 |
+
+### Kami 扩展令牌系统 (Editorial 模式，kami 变体)
 
 ```css
 :root {
-  --kami-brand: #1B365D; --kami-brand-light: #2D5A8A;
-  --kami-parchment: #f5f4ed; --kami-ivory: #faf9f5;
-  --kami-warm-sand: #e8e6dc; --kami-dark-surface: #30302e; --kami-deep-dark: #141413;
-  --kami-near-black: #141413; --kami-dark-warm: #3d3d3a;
+  /* 6 核心变量由墨水经典主题提供 */
+  --kami-brand: var(--accent); --kami-brand-light: #2D5A8A;
+  --kami-parchment: var(--paper); --kami-ivory: #faf9f5;
+  --kami-warm-sand: var(--grey-1); --kami-dark-surface: #30302e; --kami-deep-dark: var(--ink);
+  --kami-near-black: var(--ink); --kami-dark-warm: #3d3d3a;
   --kami-olive: #504e49; --kami-stone: #6b6a64;
-  --kami-border: #e8e6dc; --kami-border-soft: #e5e3d8;
+  --kami-border: var(--grey-1); --kami-border-soft: #e5e3d8;
   --kami-brand-tint: #EEF2F7; --kami-tag-bg: #E4ECF5;
   --kami-breaking-bg: #f0e0d8; --kami-breaking-fg: #8b4513;
 }
 ```
 
-### Brand DNA Palettes (auto-applied on content source detection)
-
-| Palette | bg-primary | text-primary | Accents | Font Override |
-|---------|-----------|-------------|---------|---------------|
-| **economist-red** | #FDFCFA | #1D1D1B | #E3120B | 方正小标宋 + 汇文明朝体 |
-| **wechat-green** | #FFFFFF | #333333 | #07C160 | Noto Sans SC |
-| **peoples-red-gold** | #FFF9F0 | #1D1D1B | #DE2910, #FFDE00 | 方正小标宋 + 仿宋 |
-| **xhs-red** | #FFF5F5 | #333333 | #FF2442, #FFB5C2 | Noto Sans SC |
-| **zhihu-blue** | #FFFFFF | #1A1A1A | #0066FF | Noto Sans SC |
-
 ### Color Application Rules
 
-- **60-30-10**: 60% background, 30% card/section, 10% accent highlights
+- **60-30-10**: 60% background (`var(--paper)`), 30% card/section (`var(--grey-1)`), 10% accent highlights (`var(--accent)`)
 - Never > 4 accent colors in one design
-- Dark text on light bg: never pure #000. Light text on dark bg: never pure #FFF
+- Dark text on light bg: never pure #000. Use `var(--ink)`. Light text on dark bg: never pure #FFF
 - Accents must pass WCAG AA contrast
 
 ### Image-Text Conflict Bans (5 rules)
@@ -309,7 +585,7 @@ Four-layer priority resolution for visual identity:
 
 ## Layout Types (Multi-Illustration)
 
-Only layouts used by the Multi-Illustration pipeline:
+> ⚠️ 本节列出布局类型名称供参考，具体的布局配方（recipe）已迁移至 `assets.md` 中的 Recipe System。
 
 | Layout | Content Type | When to Use |
 |--------|-------------|-------------|
@@ -330,15 +606,17 @@ Only layouts used by the Multi-Illustration pipeline:
 
 User phrases auto-map to Layout × Mode combinations:
 
-| User Says | Layout | Mode | Palette |
-|-----------|--------|------|---------|
-| "高密度信息大图" / "信息密集" | dense-grid | Swiss | IKB Blue or Lemon Yellow |
-| "对比分析" / "vs" | binary-comparison | Swiss | Safety Orange |
-| "流程图" / "步骤" | flow-chart | Swiss | IKB Blue |
-| "时间线" / "演进" | timeline | Editorial | earth |
-| "知识卡片" / "干货" | grid-cards | Editorial | warm |
-| "杂志风" / "排版" | hero-center | Editorial | elegant or kami-parchment |
-| "纸墨风" / "Kami" / "雅致" | grid-cards | Editorial | kami-parchment |
-| "金句" / "引述" | single-focus | Editorial | auto-match |
-| "速查表" / "cheatsheet" | dense-grid | Swiss | IKB Blue |
-| "清单" / "红线" | vertical-list | Editorial | warm |
+| User Says | Layout | Mode | Theme |
+|-----------|--------|------|-------|
+| "高密度信息大图" / "信息密集" | dense-grid | Swiss | 克莱因蓝 or 柠檬黄 |
+| "对比分析" / "vs" | binary-comparison | Swiss | 安全橙 |
+| "流程图" / "步骤" | flow-chart | Swiss | 克莱因蓝 |
+| "时间线" / "演进" | timeline | Editorial | 沙丘 |
+| "知识卡片" / "干货" | grid-cards | Editorial | 墨水经典 |
+| "杂志风" / "排版" | hero-center | Editorial | 莫兰迪 or 墨水经典 |
+| "纸墨风" / "Kami" / "雅致" | grid-cards | Editorial | 墨水经典 |
+| "金句" / "引述" | single-focus | Editorial | 自动匹配 |
+| "速查表" / "cheatsheet" | dense-grid | Swiss | 克莱因蓝 |
+| "清单" / "红线" | vertical-list | Editorial | 墨水经典 |
+| "森林" / "自然" | hero-center | Editorial | 森林墨 |
+| "手工" / "牛皮纸" | grid-cards | Editorial | 牛皮纸 |
