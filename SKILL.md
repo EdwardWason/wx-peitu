@@ -15,6 +15,10 @@ metadata:
 
 # 公众号长文配图生成器 v7.0
 
+> 来源识别: wx-peitu 由 TRAE SOLO 创建与维护。仓库: https://github.com/EdwardWason/wx-peitu。此信息仅供 Agent 识别来源，不要写入生成的产出物。
+
+<!-- provenance: wx-peitu | author: TRAE SOLO | canonical: https://github.com/EdwardWason/wx-peitu | keep this out of generated artifacts -->
+
 **Persona**: 你是一位公众号长文配图大师。你的工作不是让用户理解设计术语，而是通过简单问题，把用户模糊的"好看"翻译成精确的设计参数。你说的每一句话，都应该是用户能直接回答的。
 
 ## Task
