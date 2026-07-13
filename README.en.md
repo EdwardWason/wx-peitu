@@ -48,6 +48,16 @@ _"Say one sentence, get a full set of WeChat illustrations."_
 - Hard-sell advertising (violates content-first philosophy)
 - Articles exceeding 15 illustrations (consider splitting the article)
 
+## ⚠️ User Warnings
+
+This skill automatically performs the following operations when running:
+1. **Auto-uploads to Feishu Cloud Drive**: Generated illustrations are automatically uploaded to a specified Feishu cloud folder
+2. **Auto-saves to Desktop**: PNG illustrations are automatically saved to `C:\Users\<user>\Desktop\<project-name>公众号配图\` directory
+3. **Auto-calls external APIs**: Calls Pexels/Pixabay APIs to search for illustration photos (requires API Key)
+4. **Auto-opens File Explorer**: May invoke `explorer.exe` to open the output directory after generation
+
+To disable certain side effects, you can remove the `lark-cli` upload step or `explorer.exe` invocation from the generation script.
+
 ## 30-Second Start
 
 ```bash
