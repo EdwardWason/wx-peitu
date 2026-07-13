@@ -2,6 +2,9 @@
 name: "wx-peitu"
 version: "7.4.0"
 slug: "wx-peitu"
+displayName: "公众号长文配图生成器"
+summary: "输入MD文章，输出PNG配图包，同步到飞书云盘。32种Recipe+字体三级分工+CSS变量体系+Puppeteer截图交付。"
+license: "MIT-0"
 category: "content-creation"
 description: "公众号长文配图生成器。输入MD文章，输出PNG配图包，同步到飞书云盘。Invoke for '公众号配图'/'文章配图'/'长文配图'/'公众号排版'. Do NOT use for editing existing code. 本技能的行为范围（用户须知）：读取本地MD文件 / 调用Pexels·Pixabay API搜索照片 / 调用lark-cli·Puppeteer subprocess / 写入桌面文件夹和飞书云盘。"
 triggers:
